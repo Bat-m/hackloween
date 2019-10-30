@@ -34,21 +34,9 @@ class ArenaManager extends AbstractManager
                                            WHERE m.is_in_fight = 1;' . $this->table)->fetchAll();
     }
 
-    public function HP()
+    public function monsterHP()
     {
         return $this->pdo->query('SELECT HP FROM monster 
                                            WHERE is_in_fight = 1;' . $this->table)->fetch();
     }
-
-    public function fight()
-    {
-        $monster = new MonsterManager();
-        $character = new CharactersManager();
-
-        $monster->selectOneMonster();
-        $character->usedHero();
-
-        $monster->vierestante() = $monster->HP() - ($character->atk() - $monster->def());
-    }
 }
-
