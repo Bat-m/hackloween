@@ -44,4 +44,26 @@ class CharactersController
         }
         header('HTTP/1.1 405 Method Not Allowed');
     }
+
+    public function selectHero(int $id)
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            try {
+                $characterManager = new CharactersManager();
+                $character = $characterManager->selectOneById($id);
+                $json = file_get_contents('php://input');
+                $obj = json_decode($json);
+                $character['isHero'] = $obj->isHero;
+                $characterManager->update($character);
+                header('HTTP/1.1 204 resource updated successfully');
+            } catch (\Exception $e) {
+                /* var_dump should be delete in production */
+                var_dump($e->getMessage());
+                header('HTTP/1.1 500 Internal Server Error');
+            }
+        } else {
+            header('HTTP/1.1 405 Method Not Allowed');
+        }
+    }
+
 }

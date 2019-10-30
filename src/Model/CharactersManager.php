@@ -34,11 +34,39 @@ class CharactersManager extends AbstractManager
                                     JOIN stat s ON ps.stat_id = s.id;' . $this->table)->fetchAll();
     }
 
+
     public function usedHero()
     {
-        return $this->pdo->query('SELECT p.name, p.description, p.origin, p.image, s.atk, s.def, s.agility, s.HP 
+        return $this->pdo->query('SELECT p.isHero, p.name, p.description, p.origin, p.image, s.atk, s.def, s.agility, s.HP 
                                     FROM player p
                                     JOIN player_stat ps ON p.id = ps.player_id
-                                    JOIN stat s ON ps.stat_id = s.id;' . $this->table)->fetch();
+                                    JOIN stat s ON ps.stat_id = s.id where p.isHero = 1;
+                                  ' . $this->table)->fetch();
+    }
+
+    public function isDead()
+    {
+        $character = new CharactersManager();
+        $character->usedHero();
+        if ($character['HP'] < 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * @param array $character
+     * @return bool
+     */
+    public function selectHero(array $character):bool
+    {
+
+        // prepared request
+        $statement = $this->pdo->prepare("UPDATE $this->table SET `isHero` = :isHero WHERE id=:id");
+        $statement->bindValue('id', $character['id'], \PDO::PARAM_INT);
+        $statement->bindValue('isHero', $character['isHero'], \PDO::PARAM_INT);
+
+        return $statement->execute();
     }
 }
