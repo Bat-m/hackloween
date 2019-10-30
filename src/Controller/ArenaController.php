@@ -11,7 +11,6 @@ namespace App\Controller;
 
 use App\Model\ArenaManager;
 
-
 class ArenaController
 {
 
