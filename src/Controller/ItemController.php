@@ -18,7 +18,6 @@ use App\Model\ItemManager;
 class ItemController
 {
 
-
     /**
      * Retrieve item listing
      *
@@ -61,7 +60,7 @@ class ItemController
      */
     public function edit(int $id)
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try {
                 $itemManager = new ItemManager();
                 $item = $itemManager->selectOneById($id);
@@ -116,7 +115,7 @@ class ItemController
      */
     public function delete(int $id)
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try {
                 $itemManager = new ItemManager();
                 $itemManager->delete($id);
