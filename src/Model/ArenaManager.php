@@ -15,7 +15,7 @@ class ArenaManager extends AbstractManager
         parent::__construct(self::TABLE);
     }
 
-    public function characterStats()
+    public function characterStats() : array
     {
         $query= $this->pdo->query("
        SELECT s.atk, s.def, s.HP, s.agility FROM stat s
@@ -25,7 +25,30 @@ class ArenaManager extends AbstractManager
        ON ps.stat_id = p.id
        WHERE p.id = 3;
        ");
-        return $query->fetchAll();
+        return $query->fetch();
+    }
+
+    public function monsterStats(): array
+    {
+        return $this->pdo->query('SELECT m.atk, m.def, m.agility, m.HP FROM monster m
+                                           WHERE m.is_in_fight = 1;' . $this->table)->fetchAll();
+    }
+
+    public function HP()
+    {
+        return $this->pdo->query('SELECT HP FROM monster 
+                                           WHERE is_in_fight = 1;' . $this->table)->fetch();
+    }
+
+    public function fight()
+    {
+        $monster = new MonsterManager();
+        $character = new CharactersManager();
+
+        $monster->selectOneMonster();
+        $character->usedHero();
+
+        $monster->vierestante() = $monster->HP() - ($character->atk() - $monster->def());
     }
 }
 

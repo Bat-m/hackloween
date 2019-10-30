@@ -33,4 +33,12 @@ class CharactersManager extends AbstractManager
                                     JOIN player_stat ps ON p.id = ps.player_id
                                     JOIN stat s ON ps.stat_id = s.id;' . $this->table)->fetchAll();
     }
+
+    public function usedHero()
+    {
+        return $this->pdo->query('SELECT p.name, p.description, p.origin, p.image, s.atk, s.def, s.agility, s.HP 
+                                    FROM player p
+                                    JOIN player_stat ps ON p.id = ps.player_id
+                                    JOIN stat s ON ps.stat_id = s.id;' . $this->table)->fetch();
+    }
 }

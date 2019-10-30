@@ -23,5 +23,14 @@ class ArenaController
         }
         header('HTTP/1.1 405 Method Not Allowed');
     }
-}
 
+    public function monsterStats()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $arenaManager = new ArenaManager();
+            $monsterStats = $arenaManager->monsterStats();
+            return json_encode($monsterStats);
+        }
+        header('HTTP/1.1 405 Method Not Allowed');
+    }
+}

@@ -33,4 +33,15 @@ class CharactersController
         }
         header('HTTP/1.1 405 Method Not Allowed');
     }
+
+    public function hero()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $charactersManager = new CharactersManager();
+            $hero = $charactersManager->usedHero();
+
+            return json_encode($hero);
+        }
+        header('HTTP/1.1 405 Method Not Allowed');
+    }
 }
