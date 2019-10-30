@@ -54,7 +54,7 @@ class CharactersController
                 $json = file_get_contents('php://input');
                 $obj = json_decode($json);
                 $character['isHero'] = $obj->isHero;
-                $characterManager->update($character);
+                $characterManager->selectHero($character);
                 header('HTTP/1.1 204 resource updated successfully');
             } catch (\Exception $e) {
                 /* var_dump should be delete in production */
@@ -65,5 +65,4 @@ class CharactersController
             header('HTTP/1.1 405 Method Not Allowed');
         }
     }
-
 }

@@ -37,22 +37,12 @@ class CharactersManager extends AbstractManager
 
     public function usedHero()
     {
-        return $this->pdo->query('SELECT p.isHero, p.name, p.description, p.origin, p.image, s.atk, s.def, s.agility, s.HP 
+        return $this->pdo->query('SELECT p.isHero, p.name, p.description, p.origin, 
+                                                p.image, s.atk, s.def, s.agility, s.HP 
                                     FROM player p
                                     JOIN player_stat ps ON p.id = ps.player_id
                                     JOIN stat s ON ps.stat_id = s.id where p.isHero = 1;
                                   ' . $this->table)->fetch();
-    }
-
-    public function isDead()
-    {
-        $character = new CharactersManager();
-        $character->usedHero();
-        if ($character['HP'] < 0) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     /**

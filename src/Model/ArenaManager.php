@@ -52,5 +52,4 @@ class ArenaManager extends AbstractManager
             return 'Vous infligez ' . $heroDmg . ' degat a ' . $opponent['name'];
         }
     }
-
 }
