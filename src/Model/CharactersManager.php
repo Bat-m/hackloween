@@ -28,7 +28,8 @@ class CharactersManager extends AbstractManager
     }
     public function selectAllCharacters(): array
     {
-        return $this->pdo->query('SELECT p.name, p.description, p.origin, p.image, s.atk, s.def, s.agility, s.HP FROM player p
+        return $this->pdo->query('SELECT p.name, p.description, p.origin, p.image, s.atk, s.def, s.agility, s.HP 
+                                    FROM player p
                                     JOIN player_stat ps ON p.id = ps.player_id
                                     JOIN stat s ON ps.stat_id = s.id;' . $this->table)->fetchAll();
     }
