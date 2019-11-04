@@ -35,6 +35,4 @@ class ArenaController extends CharactersManager
         }
         header('HTTP/1.1 405 Method Not Allowed');
     }
-
-
 }

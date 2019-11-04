@@ -78,7 +78,8 @@ class CharactersManager extends AbstractManager
         $statement = $this->pdo->prepare("UPDATE stat s 
                                                     LEFT JOIN player_stat ps ON s.id = ps.stat_id
 		                                            LEFT JOIN player p ON p.id = ps.player_id SET 
-                                                    HP = " . $character['HP'] . " WHERE p.id = " . $character['id'] . ";");
+                                                    HP = " . $character['HP'] . " WHERE p.id = " .
+                                                    $character['id'] . ";");
 
         $statement->bindValue('HP', $character['HP'], \PDO::PARAM_INT);
         $statement->bindValue('id', $character['id'], \PDO::PARAM_INT);

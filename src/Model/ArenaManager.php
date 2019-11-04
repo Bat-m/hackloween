@@ -33,8 +33,4 @@ class ArenaManager extends AbstractManager
         return $this->pdo->query('SELECT m.atk, m.def, m.agility, m.HP FROM monster m
                                            WHERE m.is_in_fight = 1;' . $this->table)->fetchAll();
     }
-
-
 }
-
-

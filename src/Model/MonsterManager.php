@@ -36,7 +36,6 @@ class MonsterManager extends AbstractManager
         $statement->execute();
 
         return $statement->fetch();
-
     }
 
     public function selectOneById(int $id)
@@ -71,8 +70,5 @@ class MonsterManager extends AbstractManager
         $statement->bindValue('is_in_fight', $monster['is_in_fight'], \PDO::PARAM_INT);
 
         return $statement->execute();
-
     }
-
-
 }
