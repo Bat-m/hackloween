@@ -47,7 +47,7 @@ class CharactersController
 
     public function selectHero(int $id)
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
             try {
                 $characterManager = new CharactersManager();
                 $character = $characterManager->selectOneById($id);
@@ -63,6 +63,25 @@ class CharactersController
             }
         } else {
             header('HTTP/1.1 405 Method Not Allowed');
+        }
+    }
+
+    public function editCharacter()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+            try {
+                $characterManager = new CharactersManager();
+                $character = $characterManager->usedHero();
+                $json = file_get_contents('php://input');
+                $obj = json_decode($json);
+                $character['HP'] = $obj->HP;
+                $characterManager->updateCharacterHP($character);
+                header('HTTP/1.1 204 resource updated successfully');
+            } catch (\Exception $e) {
+                /* var_dump should be delete in production */
+                var_dump($e->getMessage());
+                header('HTTP/1.1 500 Internal Server Error');
+            }
         }
     }
 }

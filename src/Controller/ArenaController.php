@@ -10,8 +10,10 @@
 namespace App\Controller;
 
 use App\Model\ArenaManager;
+use App\Model\CharactersManager;
+use App\Model\MonsterManager;
 
-class ArenaController
+class ArenaController extends CharactersManager
 {
 
     public function playersStats()
@@ -34,13 +36,5 @@ class ArenaController
         header('HTTP/1.1 405 Method Not Allowed');
     }
 
-    public function fight()
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-            $arenaManager = new ArenaManager();
-            $fight = $arenaManager->fight();
-            return json_encode($fight);
-        }
-        header('HTTP/1.1 405 Method Not Allowed');
-    }
+
 }

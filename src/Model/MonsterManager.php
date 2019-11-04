@@ -27,9 +27,52 @@ class MonsterManager extends AbstractManager
         parent::__construct(self::TABLE);
     }
 
-    public function selectOneMonster(): array
+    public function selectOneMonster(int $isInFight): array
     {
-        return $this->pdo->query('SELECT m.name, m.image, m.atk, m.def, m.agility, m.HP AS onemMonster FROM monster m
-                                            WHERE killed = 0 ;' . $this->table)->fetch();
+        // prepared request
+        $statement = $this->pdo->prepare("SELECT m.name, m.image, m.atk, m.def, m.agility, m.HP  
+                                                    FROM monster m WHERE is_in_fight = :is_in_fight");
+        $statement->bindValue('is_in_fight', $isInFight, \PDO::PARAM_INT);
+        $statement->execute();
+
+        return $statement->fetch();
+
     }
+
+    public function selectOneById(int $id)
+    {
+        // prepared request
+        $statement = $this->pdo->prepare("SELECT * FROM $this->table WHERE id=:id");
+        $statement->bindValue('id', $id, \PDO::PARAM_INT);
+        $statement->execute();
+
+        return $statement->fetch();
+    }
+
+    public function updateMonster(array $monster):bool
+    {
+
+        // prepared request
+        $statement = $this->pdo->prepare("UPDATE  monster SET `HP` = :HP  WHERE is_in_fight=:is_in_fight");
+        $statement->bindValue('is_in_fight', 1, \PDO::PARAM_INT);
+        $statement->bindValue('HP', $monster['HP'], \PDO::PARAM_INT);
+
+        return $statement->execute();
+    }
+
+    public function fightMonster(array $monster):bool
+    {
+
+        // prepared request
+        $statement = $this->pdo->prepare("UPDATE  monster SET `is_in_fight` = " . $monster['is_in_fight'] . "  
+        WHERE id= " . $monster['id'] . ";");
+
+        $statement->bindValue('id', $monster['id'], \PDO::PARAM_INT);
+        $statement->bindValue('is_in_fight', $monster['is_in_fight'], \PDO::PARAM_INT);
+
+        return $statement->execute();
+
+    }
+
+
 }
